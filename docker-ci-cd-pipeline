@@ -1,3 +1,5 @@
+def dockerRun = 'docker run -p 8080:8080 -d --name my-app priyabav/my-app:1.0'
+def sshCmd = 'ssh -o StrictHostKeyChecking=no root@172.31.21.205'
 pipeline{
     agent ('any')
     stages{
@@ -28,8 +30,6 @@ pipeline{
         stage('Run Container on Server'){
             steps{
               sshagent(['dockerserver']){
-                  def dockerRun = 'docker run -p 8080:8080 -d --name my-app priyabav/my-app:1.0'
-                  def sshCmd = 'ssh -o StrictHostKeyChecking=no root@172.31.21.205'
                   sh "${sshCmd} ${dockerRun}"
               }
                 
